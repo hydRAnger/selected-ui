@@ -31,7 +31,7 @@ function LogisticColumn(props) {
         <div key={entity.id}>
           <input
             type="checkbox"
-            defaultChecked={entity.selected}
+            checked={entity.selected}
             value={entity.id}
             onChange={() => {
               onSelect && onSelect(type, entity.id)

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import './App.css';
-import Logistics from './components/Logistics';
-import SelectedUI from './components/SelectedUI';
+import "./App.css";
+import Logistics from "./components/Logistics";
+import SelectedUI from "./components/SelectedUI";
 
 const generateEntities = () => {
   const entities = {};
@@ -18,7 +18,6 @@ const generateEntities = () => {
   return entities;
 };
 
-
 function App() {
   const [entities, setEntities] = useState(generateEntities());
 
@@ -31,14 +30,38 @@ function App() {
     const newEntities = {
       ...entities
     };
-    newEntities[type][targetIndex].selected = !newEntities[type][targetIndex].selected;
+    newEntities[type][targetIndex].selected = !newEntities[type][targetIndex]
+      .selected;
     setEntities(newEntities);
-  }
+  };
+
+  const handleResetAll = () => {
+    const newEntities = Object.keys(entities).reduce((acc, type) => {
+      acc[type] = entities[type].map(e => ({ ...e, selected: false }));
+      return acc;
+    }, {});
+    setEntities(newEntities);
+  };
+
+  const handleResetType = type => {
+    const newEntities = {
+      ...entities
+    };
+    newEntities[type] = newEntities[type].map(e => ({
+      ...e,
+      selected: false
+    }));
+    setEntities(newEntities);
+  };
 
   return (
     <div className="App">
       <Logistics entities={entities} onSelect={handleEntitySelect} />
-      <SelectedUI entities={entities} />
+      <SelectedUI
+        entities={entities}
+        onResetAll={handleResetAll}
+        onResetType={handleResetType}
+      />
     </div>
   );
 }

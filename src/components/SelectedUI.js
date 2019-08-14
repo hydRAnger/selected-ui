@@ -84,6 +84,7 @@ function TypeCount(props) {
 
 export default function SelectedUI(props) {
   const { entities, onResetAll, onResetType } = props;
+  const count = caclulateSelected(entities);
 
   const wrapperStyle = css`
     width: 210px;
@@ -130,6 +131,9 @@ export default function SelectedUI(props) {
     &:hover {
       color: #ef4848;
     }
+    &:disabled {
+      color: #ccc;
+    }
   `;
 
   const handleResetAll = evt => {
@@ -140,8 +144,8 @@ export default function SelectedUI(props) {
   return (
     <div className={wrapperStyle}>
       <div className={sumStyle}>
-        {caclulateSelected(entities)} Selected
-        <button className={btnResetAllStyle} onClick={handleResetAll}>
+        {count} Selected
+        <button className={btnResetAllStyle} onClick={handleResetAll} disabled={count === 0}>
           X
         </button>
       </div>
